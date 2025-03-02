@@ -28,7 +28,7 @@ export function formatDate(dateString: string): string {
 export function generateQRCodeData(prescriptionCode: string): string {
   const baseUrl = typeof window !== 'undefined' 
     ? `${window.location.origin}/scan?code=` 
-    : 'localhost:3000/scan?code=';
+    : 'med-ekart.vercel.app/scan?code=';
   
   return baseUrl + prescriptionCode;
 }

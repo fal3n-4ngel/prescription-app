@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Scan, Search } from 'lucide-react';
@@ -15,7 +15,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function PrescriptionLookup() {
+
+function PrescriptionLookupContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const codeFromUrl = searchParams.get('code');
@@ -202,5 +203,39 @@ export default function PrescriptionLookup() {
         )}
       </Card>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="container max-w-3xl mx-auto py-6 px-4 sm:py-12">
+      <Card className="shadow-xl border border-zinc-200 overflow-hidden">
+        <CardHeader className="text-black">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-10 w-10 rounded-full" />
+            <div>
+              <Skeleton className="h-6 w-48" />
+              <Skeleton className="h-4 w-64 mt-1" />
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+export default function PrescriptionLookup() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PrescriptionLookupContent />
+    </Suspense>
   );
 }
