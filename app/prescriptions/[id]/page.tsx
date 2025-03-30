@@ -241,7 +241,7 @@ export default function PrescriptionDetailPage() {
                 Share Prescription
               </h3>
               <div className="bg-zinc-50 p-4 rounded-md">
-                <QRCodeSVG value={generateQRCodeData(prescription.id||id )} />
+                <QRCodeSVG value={generateQRCodeData(prescription)} />
               </div>
             </div>
           </CardContent>
