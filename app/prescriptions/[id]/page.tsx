@@ -146,7 +146,7 @@ export default function PrescriptionDetailPage() {
             </div>
           </CardHeader>
 
-          <CardContent className="pt-6">
+          <CardContent className="px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-6">
                 <div>
@@ -154,7 +154,7 @@ export default function PrescriptionDetailPage() {
                     <User className="mr-2 h-4 w-4" />
                     Patient Information
                   </h3>
-                  <div className="bg-zinc-50 p-4 rounded-md">
+                  <div className="bg-zinc-50 px-4 rounded-md">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-zinc-500">Name</p>
@@ -200,7 +200,7 @@ export default function PrescriptionDetailPage() {
                         <div className="flex justify-between items-center mb-2">
                           <h4 className="font-semibold">{medication.name}</h4>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                           <div>
                             <p className="text-zinc-500">Dosage</p>
                             <p>{medication.dosage}</p>
