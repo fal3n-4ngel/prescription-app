@@ -40,9 +40,9 @@ export interface Medication {
 
   
   export const MEDICATION_OPTIONS: MedicationOption[] = [
-    { value: 'CALPOL', label: 'CALPOL' },
+    { value: 'Aspirin', label: 'Aspirin' },
     { value: 'Paracetamol', label: 'Paracetamol' },
-    { value: 'Crocin', label: 'Crocin' },
-    { value: 'Oxymetazoline', label: 'Oxymetazoline' },
-    { value: 'Metphormine', label: 'Metphormine' },
+    { value: 'Naproxen', label: 'Naproxen' },
+    { value: 'Metoprolol', label: 'Metoprolol' },
+    { value: 'Dolo', label: 'Dolo' },
   ];
