@@ -22,9 +22,8 @@ export function formatDate(dateString: string): string {
   });
 }
 
-
-// OLD generateQRCodeData function  IN CASE YOU NEED A JSON STRING FOR QR CODE 
-// DO NOT DELETE ,JUST KEEP IT COMMENTED 
+// OLD generateQRCodeData function  IN CASE YOU NEED A JSON STRING FOR QR CODE
+// DO NOT DELETE ,JUST KEEP IT COMMENTED
 
 // export function generateQRCodeData(prescription: Prescription): string {
 //   const qrData = {
@@ -37,7 +36,7 @@ export function formatDate(dateString: string): string {
 //     doctor: prescription.doctorName,
 //     medications: prescription.medications.map(med => ({
 //       name: med.name,
-//       dosage: med.dosage,
+//       Count: med.Count,
 //       frequency: med.frequency,
 //       duration: med.duration
 //     })),
@@ -49,17 +48,20 @@ export function formatDate(dateString: string): string {
 // }
 
 export function generateQRCodeData(prescription: Prescription): string {
-  const medicationFirstLetters = prescription.medications.map((med) =>
-    med.name.charAt(0).toUpperCase()
-  );
+  const medicationCounts: Record<string, number> = {};
 
-  const letterCounts: Record<string, number> = {};
-  medicationFirstLetters.forEach((letter) => {
-    letterCounts[letter] = (letterCounts[letter] || 0) + 1;
+  prescription.medications.forEach((med) => {
+    const firstLetter = med.name.charAt(0).toUpperCase();
+    const Count = Number(med.frequency) * Number(med.duration);
+
+    if (!isNaN(Count)) {
+      medicationCounts[firstLetter] =
+        (medicationCounts[firstLetter] || 0) + Count;
+    }
   });
 
-  const qrString = Object.entries(letterCounts)
-    .map(([letter, count]) => `${letter}:${count}`)
+  const qrString = Object.entries(medicationCounts)
+    .map(([letter, Count]) => `${letter}:${Count}`)
     .join(",");
 
   return qrString;
