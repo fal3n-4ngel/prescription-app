@@ -47,22 +47,45 @@ export function formatDate(dateString: string): string {
 //   return JSON.stringify(qrData);
 // }
 
-export function generateQRCodeData(prescription: Prescription): string {
-  const medicationCounts: Record<string, number> = {};
+// export function generateQRCodeData(prescription: Prescription): string {
+//   const medicationCounts: Record<string, number> = {};
 
+//   prescription.medications.forEach((med) => {
+//     const firstLetter = med.name.charAt(0).toUpperCase();
+//     const Count = Number(med.frequency) * Number(med.duration);
+
+//     if (!isNaN(Count)) {
+//       medicationCounts[firstLetter] =
+//         (medicationCounts[firstLetter] || 0) + Count;
+//     }
+//   });
+
+//   const qrString = Object.entries(medicationCounts)
+//     .map(([letter, Count]) => `${letter}:${Count}`)
+//     .join(",");
+
+
+//   return qrString;
+// }
+
+
+export function generateQRCodeData(prescription: Prescription): string {
+
+  const medicationCounts: Record<string, number> = {};
   prescription.medications.forEach((med) => {
     const firstLetter = med.name.charAt(0).toUpperCase();
-    const Count = Number(med.frequency) * Number(med.duration);
-
-    if (!isNaN(Count)) {
-      medicationCounts[firstLetter] =
-        (medicationCounts[firstLetter] || 0) + Count;
+    const count = Number(med.frequency) * Number(med.duration);
+    if (!isNaN(count)) {
+      medicationCounts[firstLetter] = (medicationCounts[firstLetter] || 0) + count;
     }
   });
 
-  const qrString = Object.entries(medicationCounts)
-    .map(([letter, Count]) => `${letter}:${Count}`)
-    .join(",");
-
-  return qrString;
+  const letterOrder = ['A', 'P', 'N', 'M', 'D'];
+  
+  const qrParts = letterOrder.map(letter => {
+    const value = medicationCounts[letter] !== undefined ? medicationCounts[letter] : 0;
+    return `${letter}:${value}`;
+  });
+  
+  return qrParts.join(',');
 }
